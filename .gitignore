@@ -1,0 +1,36 @@
+server/*.py[cod]
+server/.pytest_cache
+
+# Packages
+server/*.egg
+server/*.egg-info
+server/dist
+server/build
+server/eggs
+server/parts
+server/bin
+server/var
+server/sdist
+server/develop-eggs
+server/.installed.cfg
+server/lib
+server/lib64
+server/__pycache__
+
+# Installer logs
+server/pip-log.txt
+
+# Unit test / coverage reports
+server/.coverage
+server/.tox
+server/nosetests.xml
+
+# Translations
+server/*.mo
+
+**.venv
+**venv
+**.flaskenv
+**.vscode
+server/logs
+server/migrations/schema.sql
