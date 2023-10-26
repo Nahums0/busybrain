@@ -15,7 +15,7 @@ server/develop-eggs
 server/.installed.cfg
 server/lib
 server/lib64
-server/__pycache__
+**__pycache__
 
 # Installer logs
 server/pip-log.txt
@@ -32,5 +32,6 @@ server/*.mo
 **venv
 **.flaskenv
 **.vscode
+**.DS_Store
 server/logs
 server/migrations/schema.sql
