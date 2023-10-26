@@ -1,61 +1,69 @@
-# BusyBrain - An AI Supported Dynamic Calendar
+# 🧠 Busybrain
 
-## Vision:
-In today's fast-paced world, full of distractions, it's all too easy to lose sight of your goals. Busybrain offers an easy-to-use tool that understands you, harnessing the power of artificial intelligence to plan your week. We don't just assist you in ticking off tasks. We ensure you progress both personally and professionally, while also making room for the things you love outside work. Consider Busybrain as your go-to friend in striking the right balance between getting stuff done and reaching your goals.
+---
 
-## Features:
+## Project Overview 📑
 
-- **Dynamic Task Management:** Add, edit, categorize, and prioritize tasks. From fleeting ideas to structured projects, Busybrain handles it.
+**Busybrain** is an AI scheduling assistant crafted to cater to those who yearn for effective time management and are geared towards achieving their long-term goals. With a distinctive emphasis on consolidating core productivity tools into a singular source of truth, our project stands as a beacon of integration and automation in the vast sea of productivity applications.
 
-- **Intelligent Scheduling:** Harness the power of the Eisenhower Matrix combined with time-blocking. Busybrain doesn’t just remind you of tasks, it suggests the best time to tackle them.
+---
 
-- **Adaptive Learning:** The more you use Busybrain, the smarter it gets. By learning your habits, preferences, and adjustments, it continuously refines its recommendations.
-- **Third-party Integration:** Connect Busybrain to other apps you use. Sync with Google Calendar, pull deadlines from Trello, or even time your tasks with Pomodoro.
-- **Visualization Tools:** View your day, week, or month in versatile layouts. Whether you love lists, grids, or timeline views, Busybrain has got you covered.
+## Key Features 🌟
 
-## Why BusyBrain?
+#### **One Place for Time Management** 🕰️
+#### **AI-Powered Scheduling** 🤖
+#### **Long-term Goal Management** 🎸
+---
 
-While there are numerous time management tools available, BusyBrain is unique because:
+## Getting Started 🛠️
 
-1. **Unique Selling Point 1**: Description.
-2. **Unique Selling Point 2**: Description.
+### **Developer Setup**:
 
-## Tech Stack
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/Nahums0/Busybrain.git
+   cd Busybrain/
+   ```
 
-- **Backend Framework**: Flask
-- **Frontend Framework**: React, React Suite
-- **Database**: PostgreSQL
-- **ORM**: SQLAlchemy
-- **Database Migrations**: Alembic
+2. **Set Up Your Environment**:
+   - **MacOS/Linux**:
+     ```bash
+     python -m venv server/.venv
+     source server/.venv/bin/activate
+     ```
+   - **Windows**:
+     ```bash
+     python -m venv server/.venv
+     server/.venv/bin/activate
+     ```
 
+3. **Install Dependencies**:
+   ```python -m pip -r server/requirements.txt```
 
-## Roadmap
+4. **Initlize Third Party Tools**
+   Third Party Tools Used In The Project:
+   1. PostgreSQL
+   2. Mosquitto
 
-- **Milestone 1**: Description of what will be achieved in this milestone.
-- **Milestone 2**: Description.
-- **Milestone 3**: Description.
+5. **Launch the Backend Development Server**:
+   ```
+   cd server
+   flask run
+   ```
 
-## Description of the Core Algorithm and Scheduling Philosophies:
+---
 
-Busybrain's scheduling mechanism operates on a unique combination of the Eisenhower Matrix and time-blocking, merged with machine learning elements for personalization.
+## Technical Stack 💾
 
-At its essence, the algorithm first classifies tasks based on urgency and importance. It creates four categories, akin to the Eisenhower Matrix:
+* **Frontend**: ReactJS with MUI component library. Potential expansion to React Native.
+* **Backend**: Python, Flask, SQLAlchemy, Alembic.
+* **AI**: Leverage the power of OpenAI or DistilBERT for NLP tasks.
+* **Database**: PostgreSQL is our primary choice for a reliable SQL solution.
+* **Deployment**: Google Cloud.
 
-Urgent and important.
-Not urgent but important.
-Urgent but not important.
-Neither.
-Post categorization, tasks are then matched to the user's available time slots. The time-blocking method aids in this, reserving specific blocks of time for specific task types.
+---
+## Feedback & Contributions 💌
 
-What makes Busybrain stand apart is its adaptive nature. Over time, as users might reschedule, skip, or prioritize certain tasks over others, the system takes note. Through subtle machine learning techniques, it refines its categorization and scheduling suggestions, morphing itself more and more into the user's natural rhythm and preference.
+Feedback is always welcome! Please feel free to open an issue or a pull request. Let's make **Busybrain** better together!
 
-The resultant algorithm is not just reactive, like most schedulers, but proactive, making Busybrain not just a tool but a productivity partner.
-
-## Contribution
-
-For steps on how to contribute, please refer to the CONTRIBUTING.md file.
-Project's board [link](https://trello.com/b/zDWRle2b/busybrain)
-
-## License
-
-This project is licensed under the XYZ License. See the [LICENSE](./LICENSE) file for details.
+---
