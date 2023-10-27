@@ -16,6 +16,7 @@ server/.installed.cfg
 server/lib
 server/lib64
 **__pycache__
+**.pyc
 
 # Installer logs
 server/pip-log.txt

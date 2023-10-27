@@ -26,7 +26,7 @@ class User(BaseModel):
 def create_invalid_user():
     u = User(username=1, password="test", tags=1)
     return u.model_dump()
- 
+
 
 @users_bp.route("/valid", methods=["GET", "POST"])
 def create_valid_user():
