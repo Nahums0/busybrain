@@ -2,7 +2,7 @@ import json
 from flask import Blueprint, request
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from app.mqtt import mqtt
-
+from pydantic import BaseModel
 
 APP_NAME = "Users Controller"
 users_bp = Blueprint("users", __name__, url_prefix="/api")
@@ -16,6 +16,23 @@ def login():
     return "GET Not Implemented"
 
 # SAMPLE CODE - REMOVE!#
+class User(BaseModel):
+    username: str
+    password: str
+    tags: list = []
+
+
+@users_bp.route("/invalid", methods=["GET", "POST"])
+def create_invalid_user():
+    u = User(username=1, password="test", tags=1)
+    return u.model_dump()
+ 
+
+@users_bp.route("/valid", methods=["GET", "POST"])
+def create_valid_user():
+    u = User(username="test", password="test", tags=["test"])
+    return u.model_dump()
+
 def handle_mqtt_message(client, userdata, message):
     topic = message.topic
     payload = message.payload.decode()
