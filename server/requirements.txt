@@ -32,3 +32,4 @@ tomli==2.0.1
 typing_extensions==4.8.0
 webencodings==0.5.1
 Werkzeug==2.1.2
+flask_mqtt==1.1.1

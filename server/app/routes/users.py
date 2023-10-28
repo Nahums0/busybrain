@@ -16,6 +16,7 @@ def login():
     return "GET Not Implemented"
 
 # SAMPLE CODE - REMOVE!#
+
 class User(BaseModel):
     username: str
     password: str

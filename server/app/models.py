@@ -2,6 +2,7 @@
 
 # Core Flask imports
 from flask_login import UserMixin
+from psycopg2 import Binary, Time
 
 # Third-party imports
 from sqlalchemy import (
@@ -22,44 +23,113 @@ from app import db_manager
 # alias
 Base = db_manager.base
 
+class User(Base, UserMixin): # Inheriting from UserMixin for Flask-Login integration
+    __tablename__ = 'users'
 
-class Account(Base):
-    __tablename__ = "accounts"
-    account_id = Column(Integer, primary_key=True)
-    created_at = Column(DateTime, server_default=func.now())
-    users = relationship("User", back_populates="account")
-
-
-class Role(Base):
-    __tablename__ = "roles"
-    role_id = Column(Integer, primary_key=True)
-    name = Column(Text, nullable=False)
-
-    def __repr__(self):
-        return f"<Role {self.name}>"
-
-
-class UserRole(Base):
-    __tablename__ = "users_x_roles"
-    user_id = Column(Integer, ForeignKey("users.user_id"), primary_key=True)
-    role_id = Column(Integer, ForeignKey("roles.role_id"), primary_key=True)
-    assigned_at = Column(DateTime, nullable=False, server_default=func.now())
-
-
-class User(UserMixin, Base):
-    __tablename__ = "users"
-    user_id = Column(Integer, primary_key=True)
-    username = Column(Text)
+    user_id = Column(String, primary_key=True)
     email = Column(String, nullable=False, unique=True)
-    password_hash = Column(String(128), nullable=False)
-    confirmed = Column(Boolean, nullable=False, server_default="false")
-    created_at = Column(DateTime, nullable=False, server_default=func.now())
-    account_id = Column(Integer, ForeignKey("accounts.account_id"), nullable=False)
-    account = relationship("Account", back_populates="users")
-    roles = relationship("Role", secondary="users_x_roles")
+    hashed_password = Column(Binary, nullable=False)
 
-    def get_id(self):
-        return self.user_id
+    tasks = relationship("Task", backref="user")
+    calendar_events = relationship("CalendarEvent", backref="user")
+    notes = relationship("Note", backref="user")
 
-    def __repr__(self):
-        return f"<User {self.email}>"
+
+class TimeBlock(Base):
+    __tablename__ = 'time_blocks'
+
+    time_block_id = Column(String, primary_key=True)
+    start_datetime = Column(DateTime, nullable=False)
+    end_datetime = Column(DateTime, nullable=False)
+    block_type = Column(String, nullable=False)
+
+    tasks = relationship("Task", backref="time_block")
+    calendar_events = relationship("CalendarEvent", backref="time_block")
+
+
+class Task(Base):
+    __tablename__ = 'tasks'
+
+    task_id = Column(String, primary_key=True)
+    time_block_id = Column(String, ForeignKey('time_blocks.time_block_id'))
+    title = Column(String, nullable=False)
+    description = Column(Text)
+
+    reminders = relationship("ReminderAssociation", backref="task")
+
+
+class SchedulingMetadata(Base):
+    __tablename__ = 'scheduling_metadata'
+
+    metadata_id = Column(String, primary_key=True)
+    parent_id = Column(String)
+    start_time = Column(DateTime, nullable=False)
+    duration_minutes = Column(Integer, nullable=False)
+    importance_level = Column(String)
+    deadline = Column(DateTime)
+
+
+class CalendarEvent(Base):
+    __tablename__ = 'calendar_events'
+
+    calendar_event_id = Column(String, primary_key=True)
+    time_block_id = Column(String, ForeignKey('time_blocks.time_block_id'))
+    title = Column(String, nullable=False)
+    description = Column(Text)
+
+    reminders = relationship("ReminderAssociation", backref="calendar_event")
+
+
+class Reminder(Base):
+    __tablename__ = 'reminders'
+
+    reminder_id = Column(String, primary_key=True)
+    reminder_datetime = Column(DateTime, nullable=False)
+
+    associations = relationship("ReminderAssociation", backref="reminder")
+
+
+class ReminderAssociation(Base):
+    __tablename__ = 'reminder_associations'
+
+    association_id = Column(String, primary_key=True)
+    reminder_id = Column(String, ForeignKey('reminders.reminder_id'))
+    association_type = Column(String)
+    object_id = Column(Integer)
+
+
+class Note(Base):
+    __tablename__ = 'notes'
+
+    note_id = Column(String, primary_key=True)
+    content = Column(Text)
+
+
+class Routine(Base):
+    __tablename__ = 'routines'
+
+    routine_id = Column(String, primary_key=True)
+    min_duration_minutes = Column(Integer, nullable=False)
+    max_duration_minutes = Column(Integer, nullable=False)
+    title = Column(String, nullable=False)
+    optimal_time = Column(Time)
+
+    scheduled_days = relationship("RoutineScheduledDay", backref="routine")
+    timeframes = relationship("Timeframe", backref="routine")
+
+
+class RoutineScheduledDay(Base):
+    __tablename__ = 'routine_scheduled_days'
+
+    scheduled_day_id = Column(Integer, primary_key=True)
+    routine_id = Column(Integer, ForeignKey('routines.routine_id'))
+    day_of_week = Column(String)
+
+
+class Timeframe(Base):
+    __tablename__ = 'timeframes'
+
+    timeframe_id = Column(Integer, primary_key=True)
+    routine_id = Column(Integer, ForeignKey('routines.routine_id'))
+    start_time = Column(Time)
+    end_time = Column(Time)

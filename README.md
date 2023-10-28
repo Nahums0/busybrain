@@ -38,14 +38,17 @@
      ```
 
 3. **Install Dependencies**:
-   ```python -m pip -r server/requirements.txt```
+   ```python -m pip install -r server/requirements.txt```
 
-4. **Initlize Third Party Tools**
+4. **Set Environment Variables**
+   Rename ```flaskenv``` to ```.flaskenv``` 
+
+5. **Initlize Third Party Tools**
    Third Party Tools Used In The Project:
    1. PostgreSQL
    2. Mosquitto
 
-5. **Launch the Backend Development Server**:
+6. **Launch the Backend Development Server**:
    ```
    cd server
    flask run
